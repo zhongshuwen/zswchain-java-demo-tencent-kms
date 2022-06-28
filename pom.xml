@@ -11,20 +11,19 @@
 
     <repository>
         <id>central</id>
-        <name>release</name>
-        <url>https://zhongshuwen.jfrog.io/artifactory/zsw-libs-release</url>
+        <url>https://repo1.maven.org/maven2/</url>
     </repository>
     <repository>
-        <id>central</id>
-        <name>local</name>
-        <url>https://zhongshuwen.jfrog.io/artifactory/zsw-libs-release</url>
+        <id>github</id>
+        <url>https://zhongshuwen.github.io/zswchain-java/target/mvn-artifact</url>
     </repository>
 </repositories>
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
     </properties>
     <dependencies>
+
 
         <dependency>
             <groupId>org.zhongshuwen</groupId>

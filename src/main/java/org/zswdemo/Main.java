@@ -293,17 +293,20 @@ public class Main {
         return processor.signAndBroadcast();
     }
     public static void TestFull() {
-        String zswAdminPrivateKey = "PVT_GM_uvCF2fm8AjG8aoLf7csAdw4fCCYxLdG1SqybJkS6ikBY6xZgv";
-        String keXinJieDianPrivateKey = "PVT_GM_2uzgmWfht8ZiKH1wjTV26CP4GKW8BXTXR4zApqcQh8qxNaRssU";
+        // 把"zswAdminPrivateKey"改成docker-compose.yaml
+        String zswAdminPrivateKey = "PVT_GM_2HDJ438CqpDcfpXcrHVdwXT79bAQfWq5Foz9d3SBCDKC4vHrob";
+
+
+        String keXinJieDianPrivateKey = "PVT_GM_2EMuJ8xjvEmikuA7pDa5miN7qAFWtPU1RVaSr3rXErCdkxJzBN";
         String userAPublicKey = "PUB_GM_79mhnfDTtUiHALKUk35ziBU9MgynfdwKCsvsEAkUwaWPU1GYaU";
         String userBPublicKey = "PUB_GM_7hspJH3JGijxNMUCEVCkg5t7ZULrcuR1RxBe9WmxZkDkDud9Mr";
-        String keXinJieDianName = "kxjdtestzzxa";
-        String userAName = "usertestzzxa";
-        String userBName = "usertestzzxb";
+        String keXinJieDianName = "kxjdtestzzza";
+        String userAName = "usertestzzza";
+        String userBName = "usertestzzzb";
 
-        String kexinJieDianZhongShuWenUUID = "2b9768c8-1d7c-4428-a7e7-3c04ae8c3396";
+        String kexinJieDianZhongShuWenUUID = "2b9768c8-1d7c-4428-a7e7-3c04ae8c339a";
 
-        String basicCollectionCoreSchemaName = "yishupinxxv1";
+        String basicCollectionCoreSchemaName = "yishupinxxv2";
         ZSWItemsSchemaFieldDefinition[] basicCollectionCoreSchema = new ZSWItemsSchemaFieldDefinition[]{
                 new ZSWItemsSchemaFieldDefinition("name", "string"),
                 new ZSWItemsSchemaFieldDefinition("description", "string"),
@@ -312,7 +315,7 @@ public class Main {
                 new ZSWItemsSchemaFieldDefinition("logo", "string"),
         };
 
-        String collectionAUUID = "4d08ce12-b11f-4ace-8382-edce59f604c0";
+        String collectionAUUID = "4d08ce12-b11f-4ace-8382-edce59f604ca";
         ZSWAPIV1.KVPair[] collectionAMetadata = new ZSWAPIV1.KVPair[]{
                 CreateVariantFieldValue("name", "string","上海知名地"),
                 CreateVariantFieldValue("description", "string","一个关于上海知名地的数字艺术品组合"),
@@ -321,7 +324,7 @@ public class Main {
                 CreateVariantFieldValue("logo", "string","https://examplecollection.zhongshuwen.com/logo.png")
         };
 
-        String commonLocationShuZiCangPinSchemaName = "locationszcp";
+        String commonLocationShuZiCangPinSchemaName = "locationszcz";
         ZSWItemsSchemaFieldDefinition[] commonLocationShuZiCangPinSchema = new ZSWItemsSchemaFieldDefinition[]{
                 new ZSWItemsSchemaFieldDefinition("name", "string"),
                 new ZSWItemsSchemaFieldDefinition("region", "string"),
@@ -333,20 +336,20 @@ public class Main {
         };
 
 
-        String itemTemplateAUUID = "bc2c7eaa-a2ff-4b49-be37-fcfdc53f8ce0";
+        String itemTemplateAUUID = "bc2c7eaa-a2ff-4b49-be37-fcfdc53f8cea";
         ZSWAPIV1.KVPair[] itemTemplateACommonMetadata = new ZSWAPIV1.KVPair[]{
                 CreateVariantFieldValue("city", "string","上海市"),
                 CreateVariantFieldValue("district", "string","徐汇区"),
                 CreateVariantFieldValue("region", "string","中国"),
         };
 
-        String itemAUUID = "4462c722-23ce-4193-a78b-a0ca9cd6b316";
+        String itemAUUID = "4462c722-23ce-4193-a78b-a0ca9cd6b31a";
         ZSWAPIV1.KVPair[] itemAImmutableMetadata = new ZSWAPIV1.KVPair[]{
                 CreateVariantFieldValue("name", "string","上海交通大学"),
                 CreateVariantFieldValue("image_url", "string","https://images.testnet.zhongshuwen.com/c/124912847/13118.png"),
         };
 
-        String itemBUUID = "ae13217b-2efa-413f-9abd-11171aec354d";
+        String itemBUUID = "ae13217b-2efa-413f-9abd-11171aec354a";
         ZSWAPIV1.KVPair[] itemBImmutableMetadata = new ZSWAPIV1.KVPair[]{
                 CreateVariantFieldValue("name", "string","上海交通大学"),
                 CreateVariantFieldValue("image_url", "string","https://images.testnet.zhongshuwen.com/c/124912847/13118.png"),
@@ -392,20 +395,20 @@ public class Main {
 
             Thread.sleep(5000);
 
-            createChainUser(processor, keXinJieDianName, keXinJieDianPublicKey,keXinJieDianPublicKey,100000,10000,10000);
+            createChainUser(getProcessor(session), keXinJieDianName, keXinJieDianPublicKey,keXinJieDianPublicKey,100000,10000,10000);
 
-            createChainUser(processor, userAName, userAPublicKey,userAPublicKey,100000,10000,10000);
+            createChainUser(getProcessor(session), userAName, userAPublicKey,userAPublicKey,100000,10000,10000);
 
-            createChainUser(processor, userBName, userBPublicKey,userBPublicKey,100000,10000,10000);
+            createChainUser(getProcessor(session), userBName, userBPublicKey,userBPublicKey,100000,10000,10000);
             System.out.println("created base accounts");
 
             Thread.sleep(5000);
-            giveUserKexinJiedianPermissions(processor, keXinJieDianName, kexinJieDianZhongShuWenUUID);
+            giveUserKexinJiedianPermissions(getProcessor(session), keXinJieDianName, kexinJieDianZhongShuWenUUID);
             System.out.println("created accounts with kexinjiedian permissions");
 
             Thread.sleep(5000);
 
-            processor.prepare(Arrays.asList(
+            SendTx(session,Arrays.asList(
                     new Action[]{
                             Action.fromSerializable(
                                     "zsw.items",
@@ -437,14 +440,15 @@ public class Main {
                             ),
                     }
             ));
-            processor.signAndBroadcast();
+
             System.out.println("created schema");
             Thread.sleep(5000);
-            createCollectionDemo(processor, keXinJieDianName, collectionAUUID, basicCollectionCoreSchemaName, collectionAMetadata);
+            createCollectionDemo(getProcessor(session), keXinJieDianName, collectionAUUID, basicCollectionCoreSchemaName, collectionAMetadata);
             Thread.sleep(5000);
             System.out.println("created collection");
+
             makeItemTemplateAndItems(
-                    processor,
+                    getProcessor(session),
                     keXinJieDianName,
                     collectionAUUID,
                     itemTemplateAUUID,
@@ -474,14 +478,19 @@ public class Main {
                             "mint你的数字藏品"
                     )
             );
-            processor.prepare(Arrays.asList(
+            SendTx(session, Arrays.asList(
                     new Action[]{
                             mintAction,
 
                     }));
-            processor.signAndBroadcast();
 
-            Thread.sleep(5000);
+            System.out.println("waiting tx + 1 minute in legal compliance demo...");
+            Thread.sleep(30000);
+            System.out.println("60 seconds left before unfreezing...");
+
+            Thread.sleep(30000);
+            System.out.println("30 seconds left before unfreezing...");
+            Thread.sleep(30000);
 
 
             Action transferAction = Action.fromSerializable(
@@ -504,12 +513,11 @@ public class Main {
                             "给用户B一个数字藏品"
                     )
             );
-            processor.prepare(Arrays.asList(
+            SendTx(session,Arrays.asList(
                     new Action[]{
                             transferAction,
 
                     }));
-            processor.signAndBroadcast();
 
             Thread.sleep(5000);
 
@@ -589,7 +597,7 @@ public class Main {
         }
 
     }
-    public TransactionProcessor getProcessor(TransactionSession sessionClone){
+    public static TransactionProcessor getProcessor(TransactionSession sessionClone){
 
         TransactionSession session = new TransactionSession(
                 sessionClone.getSerializationProvider(),
@@ -613,7 +621,7 @@ public class Main {
         processor.setTransactionConfig(transactionConfig);
         return processor;
     }
-    public SendTransactionResponse SendTx(TransactionSession sessionClone, List<Action> actions) throws TransactionPrepareError, TransactionSignAndBroadCastError {
+    public static SendTransactionResponse SendTx(TransactionSession sessionClone, List<Action> actions) throws TransactionPrepareError, TransactionSignAndBroadCastError {
         TransactionProcessor proc = getProcessor(sessionClone);
         proc.prepare(actions);
         return proc.signAndBroadcast();

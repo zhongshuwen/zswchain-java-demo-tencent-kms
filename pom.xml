@@ -8,19 +8,18 @@
     <artifactId>zswchain-java-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 <repositories>
-
     <repository>
         <id>central</id>
         <url>https://repo1.maven.org/maven2/</url>
     </repository>
     <repository>
         <id>github</id>
-        <url>https://zhongshuwen.github.io/zswchain-java/target/mvn-artifact</url>
+        <url>https://zhongshuwen.github.io/zswchain-java/mvn/mvn-artifact</url>
     </repository>
 </repositories>
     <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
     <dependencies>
 
@@ -28,7 +27,7 @@
         <dependency>
             <groupId>org.zhongshuwen</groupId>
             <artifactId>zswjava</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.2</version>
         </dependency>
     </dependencies>
 

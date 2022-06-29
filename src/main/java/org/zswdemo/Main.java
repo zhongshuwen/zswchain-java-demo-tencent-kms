@@ -293,8 +293,9 @@ public class Main {
         return processor.signAndBroadcast();
     }
     public static void TestFull() {
-        // 把"zswAdminPrivateKey"改成docker-compose.yaml
-        String zswAdminPrivateKey = "PVT_GM_2HDJ438CqpDcfpXcrHVdwXT79bAQfWq5Foz9d3SBCDKC4vHrob";
+
+        // 把"zswAdminPrivateKey"改成docker-compose.yaml的"ZSW_ADMIN_PRIVATE_KEY"
+        String zswAdminPrivateKey = "PVT_GM_..............";
 
 
         String keXinJieDianPrivateKey = "PVT_GM_2EMuJ8xjvEmikuA7pDa5miN7qAFWtPU1RVaSr3rXErCdkxJzBN";

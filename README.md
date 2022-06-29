@@ -1,9 +1,10 @@
 # zswchain-java-demo
 
-## Run Main.main()
 
-## OS支持
-- Ubuntu 18.04 x86_64
-- OSX
+# 启动
+1. 启动联盟链，按照 [https://docs.banquan.sh.cn](https://docs.banquan.sh.cn)
+2. 更新Main.java，把"zswAdminPrivateKey"改成启动链docker-compose.yaml的"ZSW_ADMIN_PRIVATE_KEY"
+3. Run Main.main() 🎉
 
-如果需要别的OS支持，联系中数文技术人员
+## JDK
+- JDK 8 以上

@@ -294,8 +294,18 @@ public class Main {
     }
     public static void TestFull() {
 
+        AliyunKMSSigner signer2 = new AliyunKMSSigner("cn-hangzhou","<your ak id>","<your ak secret>");
+        try {
+            signer2.importKey("<example key id>", "<example version id>>");
+        }catch(Exception e){
+            System.out.println(e);
+            return;
+        }
+        System.out.println(signer2.getAvailableKeys().get(0));
+
+
         // 把"zswAdminPrivateKey"改成docker-compose.yaml的"ZSW_ADMIN_PRIVATE_KEY"
-        String zswAdminPrivateKey = "PVT_GM_..............";
+        //String zswAdminPrivateKey = "PVT_GM_..............";
 
 
         String keXinJieDianPrivateKey = "PVT_GM_2EMuJ8xjvEmikuA7pDa5miN7qAFWtPU1RVaSr3rXErCdkxJzBN";
@@ -368,7 +378,7 @@ public class Main {
             SoftSM2KeySignatureProviderImpl signatureProvider = new SoftSM2KeySignatureProviderImpl();
 
             //可以使用https://tools.banquan.sh.cn/zsw-key-generator.html生成测试密钥，改成docker-compose设置的admin密钥
-            signatureProvider.importKey(zswAdminPrivateKey);
+            //signatureProvider.importKey(zswAdminPrivateKey);
             //System.out.println("Imported Private Key with Public Key: "+signatureProvider.getAvailableKeys().get(0));
 
             signatureProvider.importKey(keXinJieDianPrivateKey);
@@ -377,7 +387,7 @@ public class Main {
                     serializationProvider,
                     rpcProvider,
                     abiProvider,
-                    signatureProvider
+                    signer2
             );
             serializationProvider.setUpGSON();
             TransactionProcessor processor = session.getTransactionProcessor();
@@ -444,6 +454,7 @@ public class Main {
 
             System.out.println("created schema");
             Thread.sleep(5000);
+            /*
             createCollectionDemo(getProcessor(session), keXinJieDianName, collectionAUUID, basicCollectionCoreSchemaName, collectionAMetadata);
             Thread.sleep(5000);
             System.out.println("created collection");
@@ -586,7 +597,7 @@ public class Main {
                     )
             ), ZSWItemsTableResponse.class);
             System.out.println(itemsExactQueryResponse.rows[0].serialized_immutable_metadata[0]);
-
+*/
 
 
 

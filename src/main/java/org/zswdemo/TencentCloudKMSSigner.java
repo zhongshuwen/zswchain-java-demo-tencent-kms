@@ -1,5 +1,6 @@
 package org.zswdemo;
 
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.Sha256Hash;
 import org.bouncycastle.asn1.ASN1EncodableVector;
@@ -36,31 +37,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 
-public class AliyunKMSSigner implements ISignatureProvider {
-    private AliyunKMSClient kmsClient;
+public class TencentCloudKMSSigner implements ISignatureProvider {
+    private TencentCloudKMSClient kmsClient;
 
     static {
         Security.addProvider(new BouncyCastleProvider());
     }
 
-    public AliyunKMSSigner(String region, String akId, String akSecret){
-        this.kmsClient = new AliyunKMSClient(region, akId, akSecret);
+    public TencentCloudKMSSigner(String region, String akId, String akSecret){
+        this.kmsClient = new TencentCloudKMSClient(region, akId, akSecret);
 
 
-    }
-    public class KmsKeyVersion {
-        public String id;
-        public String versionId;
-        public KmsKeyVersion(String id, String versionId){
-            this.id = id;
-            this.versionId = versionId;
-        }
     }
     /**
      * Keep a Set (Unique) of private keys in PEM format
      */
-    private Map<String, KmsKeyVersion> keyMap = new HashMap<String, KmsKeyVersion>();
+    private Map<String, String> keyMap = new HashMap<String, String>();
     private static byte[] GetRSBytesFromSignaturePEM(String signaturePem) throws PEMProcessorError {
 
         PEMProcessor pp = new PEMProcessor(signaturePem);
@@ -81,14 +75,14 @@ public class AliyunKMSSigner implements ISignatureProvider {
         }
 
     }
-    public void importKey(@NotNull String id, @NotNull String versionId) throws ImportKeyError {
+    public void importKey(@NotNull String id) throws ImportKeyError {
         if (id.isEmpty()) {
             throw new ImportKeyError(SoftKeySignatureErrorConstants.IMPORT_KEY_INPUT_EMPTY_ERROR);
         }
         try {
-            String key = kmsClient.GetPublicKey(id, versionId);
+            String key = kmsClient.GetPublicKey(id);
             String zswKey = pemToZSWPublicKey(key);
-            keyMap.put(zswKey, new KmsKeyVersion(id, versionId));
+            keyMap.put(zswKey, id);
 
         }catch(Exception e){
             throw new ImportKeyError(e);
@@ -131,9 +125,9 @@ public class AliyunKMSSigner implements ISignatureProvider {
 
         for(String requestKey : zswhqTransactionSignatureRequest.getSigningPublicKeys()) {
             if (keyMap.containsKey(requestKey)) {
-                KmsKeyVersion keyVersion =  keyMap.get(requestKey);
+                String keyId =  keyMap.get(requestKey);
                 try {
-                    byte[] data = kmsClient.AsymmetricSign(keyVersion.id, keyVersion.versionId, "SM2DSA", hashedMessage);
+                    byte[] data = kmsClient.AsymmetricSign(keyId, "SM2DSA", hashedMessage);
                     System.out.println("sig: "+Hex.encode(data));
 
 
@@ -150,12 +144,10 @@ public class AliyunKMSSigner implements ISignatureProvider {
                                     "GM".getBytes()
                             ));
                     signatures.add("SIG_GM_".concat(signatureWithCheckSum));
-                } catch (com.aliyuncs.exceptions.ClientException error) {
+                } catch (TencentCloudSDKException error) {
                     throw new SignTransactionError(error);
                 } catch (Base58ManipulationError error) {
                     throw new SignTransactionError(error);
-                } catch (NoSuchAlgorithmException e) {
-                    throw new SignTransactionError(e);
                 }
             }
         }

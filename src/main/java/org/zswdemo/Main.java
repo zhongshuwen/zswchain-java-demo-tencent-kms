@@ -27,10 +27,6 @@ import org.zhongshuwen.zswjava.utilities.ZSWHelpers;
 import org.zhongshuwen.zswjava.utilities.ZSWIdHelper;
 import org.zhongshuwen.zswjava.utilities.ZSWTableRowResponse;
 import org.zhongshuwen.zswjavacrossplatformabi.ZswCoreSerializationProvider;
-import org.zz.gmhelper.SM2Util;
-
-import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -294,9 +290,9 @@ public class Main {
     }
     public static void TestFull() {
 
-        AliyunKMSSigner signer2 = new AliyunKMSSigner("cn-hangzhou","<your ak id>","<your ak secret>");
+        TencentCloudKMSSigner signer2 = new TencentCloudKMSSigner("<your region>","<your ak id>","<your ak secret>");
         try {
-            signer2.importKey("<example key id>", "<example version id>>");
+            signer2.importKey("<example key id>");
         }catch(Exception e){
             System.out.println(e);
             return;
